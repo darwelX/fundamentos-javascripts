@@ -20,20 +20,17 @@ function get(URL){
   });
 }
 
+let luke = {};
 get('https://swapi.co/api/people/1/')
 .then(function(response){
-  let luke = {};
   luke = response;
   let strUrl = JSON.stringify(luke.homeworld);
   let url = `https${strUrl.substring(5,strUrl.length -1)}`;
-  get(url)
-  .then(function(response){
-    luke.homeworld = response;
-    console.log(`${luke.name} nacio en ${luke.homeworld.name}`);
-  })
-  .catch(function(err){
-    console.log(err);
-  });
+  return get(url)
+})
+.then(function(response){
+  luke.homeworld = response;
+  console.log(`${luke.name} nacio en ${luke.homeworld.name}`);
 })
 .catch(function(err){
   console.log(err);
